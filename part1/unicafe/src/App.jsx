@@ -3,12 +3,7 @@ import { useState } from 'react'
 const ShowAverageAndPostive = ({ sum, total, good }) => {
   const average = sum / total
   const percentage = good / total
-
-  if (total == 0) {
-    return (
-      <p>doesnt have votes yet</p>
-    )
-  }
+  
   return (
     <>
       <Display count={average} text="average" />
@@ -35,6 +30,16 @@ const Button = ( {handleClick, text }) => {
 }
 
 const Statistics = ({good, neutral, bad, all, sum}) => {
+  if (all == 0) {
+    return (
+      <>
+        <h1> statistics </h1>
+        <p>No feedback given</p>
+      </>
+    )
+  }
+  
+  
   return (
     <>
       <h1> statistics </h1>
