@@ -1,23 +1,36 @@
 import { useState } from 'react'
 
-const ShowAverageAndPostive = ({ sum, total, good }) => {
+const ShowAverage = ({ sum, total, good }) => {
   const average = sum / total
-  const percentage = good / total
-
+  
   return (
     <>
       <StatisticLine count={average} text="average" />
-      positive {percentage * 100} %
     </>
+  )
+}
+
+const Positive = ({ good, total }) => {
+  const percentage = good / total
+
+  return (
+    <tr>
+      <td>
+        positive
+      </td>
+      <td>
+      {percentage * 100} %
+      </td>
+    </tr>
   )
 }
 
 const StatisticLine = ({ text, count }) => {
   return (
-    <>
-      {text} {count}
-      <br />
-    </>
+    <tr>
+      <td>{text}</td>
+      <td>{count}</td>
+    </tr>
   )
 }
 
@@ -40,12 +53,17 @@ const Statistics = ({good, neutral, bad, all, sum}) => {
   }
   return (
     <>
-      <h1> statistics </h1>
-      <StatisticLine count={good} text="good" />
-      <StatisticLine count={neutral} text="neutral" />
-      <StatisticLine count={bad} text="bad" />
-      <StatisticLine count={all} text="all" />
-      <ShowAverageAndPostive sum={sum} total={all} good={good}/> 
+    <h1> statistics </h1>
+    <table>
+      <tbody>
+        <StatisticLine count={good} text="good" />
+        <StatisticLine count={neutral} text="neutral" />
+        <StatisticLine count={bad} text="bad" />
+        <StatisticLine count={all} text="all" />
+        <ShowAverage sum={sum} total={all} />
+        <Positive good={good} total={all} />
+      </tbody>
+    </table>
     </>
   )
 }
