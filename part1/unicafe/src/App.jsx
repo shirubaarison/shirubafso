@@ -1,13 +1,30 @@
 import { useState } from 'react'
 
-const Display = ({ text, count }) => {
+const ShowAverageAndPostive = ({ sum, total, good }) => {
+  const average = sum / total
+  const percentage = good / total
+
+  if (total == 0) {
+    return (
+      <p>doesnt have votes yet</p>
+    )
+  }
   return (
-    <p>
-      {text}:{count}
-    </p>
+    <>
+      <Display count={average} text="average" />
+      positive {percentage * 100} %
+    </>
   )
 }
 
+const Display = ({ text, count }) => {
+  return (
+    <>
+      {text} {count}
+      <br />
+    </>
+  )
+}
 
 const Button = ( {handleClick, text }) => {
   return (
@@ -23,14 +40,23 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const [all, setAll] = useState(0)
+
+  const [sum, setSum] = useState(0)
+
   const voteGood = () => {
     setGood(good + 1)
+    setAll(all + 1)
+    setSum(sum + 1)
   }
   const voteNeutral = () => {
     setNeutral(neutral + 1)
+    setAll(all + 1)
   }
   const voteBad = () => {
     setBad(bad + 1)
+    setAll(all + 1)
+    setSum(sum - 1)
   }
 
   return (
@@ -44,6 +70,8 @@ const App = () => {
       <Display count={good} text="good" />
       <Display count={neutral} text="neutral" />
       <Display count={bad} text="bad" />
+      <Display count={all} text="all" />
+      <ShowAverageAndPostive sum={sum} total={all} good={good}/> 
     </div>
   )
 }
