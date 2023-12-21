@@ -3,16 +3,16 @@ import { useState } from 'react'
 const ShowAverageAndPostive = ({ sum, total, good }) => {
   const average = sum / total
   const percentage = good / total
-  
+
   return (
     <>
-      <Display count={average} text="average" />
+      <StatisticLine count={average} text="average" />
       positive {percentage * 100} %
     </>
   )
 }
 
-const Display = ({ text, count }) => {
+const StatisticLine = ({ text, count }) => {
   return (
     <>
       {text} {count}
@@ -38,15 +38,13 @@ const Statistics = ({good, neutral, bad, all, sum}) => {
       </>
     )
   }
-  
-  
   return (
     <>
       <h1> statistics </h1>
-      <Display count={good} text="good" />
-      <Display count={neutral} text="neutral" />
-      <Display count={bad} text="bad" />
-      <Display count={all} text="all" />
+      <StatisticLine count={good} text="good" />
+      <StatisticLine count={neutral} text="neutral" />
+      <StatisticLine count={bad} text="bad" />
+      <StatisticLine count={all} text="all" />
       <ShowAverageAndPostive sum={sum} total={all} good={good}/> 
     </>
   )
