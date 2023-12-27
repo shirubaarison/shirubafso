@@ -16,7 +16,12 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    // console.log("clicked", event.target)
+    // console.log("persons", persons)
+    if (persons.filter(e => e.name === newName).length > 0) {
+      window.alert(` ${newName} is already added to phonebook`)
+      setNewName('')
+      return
+    }
 
     const newObj = {
       name: newName
