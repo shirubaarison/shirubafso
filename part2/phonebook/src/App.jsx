@@ -1,6 +1,5 @@
-import axios from 'axios'
 import { useState, useEffect } from 'react'
-import Persons from './components/Persons'
+import Person from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 
@@ -58,6 +57,18 @@ const App = () => {
       })
   }
 
+  const deletePerson = (id) => {
+    const person = persons.find(n => n.id === id)
+
+    if (window.confirm(`delete ${person.name}?`)) {
+      personsService
+        .deleteObj(id)
+        .then(response => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -65,7 +76,9 @@ const App = () => {
       <h3>Add a new</h3>
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNewName={handleNewName} handlewNewNumber={handlewNewNumber}/>
       <h3>Numbers</h3>
-      <Persons persons={peopleToShow} />
+      {peopleToShow.map(person => 
+        <Person key={person.id} person={person} deletePerson={() => deletePerson(person.id)}/>
+      )}
     </div>
   )
 }
