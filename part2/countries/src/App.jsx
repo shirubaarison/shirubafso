@@ -3,14 +3,13 @@ import countrieServices from './services/Countries'
 import Search from './components/Search'
 import View from './components/View'
 
-const App = () => {
+const App = () => {  
   // Countries
   const [countries, setNewCountries] = useState([])
   const [countriesToShow, setNewCountriesToShow] = useState([])
   
   // Fetch ALL countries json
   useEffect(() => {
-    console.log("effect")
     countrieServices
     .getAll()
     .then(countries => {
@@ -30,7 +29,6 @@ const App = () => {
     setNewCountriesToShow(countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase())))
   }, [search])
 
-  console.log(countriesToShow)
   return (
     <div>
       <Search searchValue={search} handleSearch={handleNewSearch} />

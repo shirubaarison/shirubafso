@@ -1,6 +1,34 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const DisplayWeather = ( {city, temp, wind, ico }) => {
+    const icoURL = `https://openweathermap.org/img/wn/${ico}@2x.png`
+    return (
+        <>
+            <h2>weather in {city}</h2>
+            <p>temperature {(temp -273.15).toFixed(2)} Celcius</p>
+            <img src={icoURL} height={100}></img>
+            <p>wind {wind} m/s</p>
+        </>
+    )
+}
+
 const CountryView = ({ country }) => {
+    const api_key = import.meta.env.VITE_SOME_KEY
     const name = country.name.common
+    
     const capital = country.capital[0]
+
+    // Weather
+    const [weather, setWeather] = useState()
+    useEffect(() => {
+        axios
+            .get(`http://api.openweathermap.org/data/2.5/weather?q=${capital}&APPID=${api_key}`)
+            .then(response => {
+                setWeather(response.data)
+            })
+    }, [])
+
     const area = country.area
 
     const flag = country.flags.png
@@ -23,6 +51,7 @@ const CountryView = ({ country }) => {
         )}
     </ul>
     <img style={flagStyles} src={flag}></img>
+    {weather && <DisplayWeather city={capital} temp={weather['main']['temp']} wind={weather['wind']['speed']} ico={weather['weather'][0]['icon']}/>}
     </div> 
     )
 }
