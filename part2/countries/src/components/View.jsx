@@ -27,7 +27,15 @@ const CountryView = ({ country }) => {
     )
 }
 
-const View = ({ countries }) => {
+const View = ({ countries, setCountries }) => {
+    
+    // Show button
+    const showButton = name => {
+        const coun = [countries.find(c => c.name.common === name)]
+        
+        setCountries(coun)
+    }
+    
     if (countries.length > 10) {
       return <div><p>too many matches bro</p></div>
     }
@@ -37,7 +45,7 @@ const View = ({ countries }) => {
     return (
       <div>
         {countries.map(country => (
-          <p key={country.name.common}>{country.name.common}</p>
+          <p key={country.name.common}>{country.name.common} <button onClick={() => showButton(country.name.common)}>show</button></p>
         ))}
       </div>
     );

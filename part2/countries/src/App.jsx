@@ -30,10 +30,11 @@ const App = () => {
     setNewCountriesToShow(countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase())))
   }, [search])
 
+  console.log(countriesToShow)
   return (
     <div>
       <Search searchValue={search} handleSearch={handleNewSearch} />
-      {search && <View countries={countriesToShow} />}
+      {search && <View countries={countriesToShow} setCountries={setNewCountriesToShow}/>}
     </div>
   )
 }
